@@ -27,7 +27,14 @@ export default function ProjectDetails() {
   const del = async (taskId:number) => {
     await api.delete(`/projects/${id}/tasks/${taskId}`);
     setTasks(tasks.filter(t=>t.id!==taskId));
-  };
+  const schedule = async () => {
+  const res = await api.post(`/v1/projects/${id}/schedule`);
+  const ordered = res.data.orderedTasks;
+  alert("Smart Schedule Generated:\n" + ordered.map((t:any)=>t.title).join("\n"));
+};
+
+<button onClick={schedule}>Smart Schedule</button>
+};
 
   return (
     <div style={{padding:20}}>
